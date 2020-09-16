@@ -5,10 +5,12 @@ use a 64bit PC (one that doesnt have a '32bit sticker), because Pegasus and the 
 Go and ask in SDA which patient room the patient is going to be in. if it's an even number, the tower will be to the right of the patient (from our point of view).
 Make sure the Power supply is on the far side from the patient and cables. 
 Check data cable between PC and amplifier
+leave one door of the amplifier box open prevent overheating
 plug cables into amplifier in every second slot (first slot remains empty). make sure they're all the way in! Should hear a click sound.
 Make sure everything is labeled correctly, incl. HDMI cables, chet-adapter, and print the implantation scheme / order of HDMI channels
 find 2 network cables, mouse, keyboard
 make sure there is a DAQ
+make sure you have a FFP2 or 3 mask for the patient
 
 Patient room:
 Connect the power supply, use ORANGE outlet.
@@ -86,6 +88,7 @@ end
 
 If you're using comboboards (the amplifier with half the slots. if you're not sure, you're probably not using comboboards): set ref in netcom for MACROS to SubjGnd1 and for EKG, EMG to Ref 1.2 and 1.3, respectively
 
+ask the patient to use the FFP2 or FFP3 mask during connectting the micros
 Connect microwires to headstages
 
 active ground going into RA1, use outer socket (add adapter where needed):
