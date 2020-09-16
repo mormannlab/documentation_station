@@ -1,0 +1,102 @@
+>>>>>>>   C o n n e c t i n g    P a t i e n t    <<<<<<<<<<<<<
+
+64bit system auswählen (eins, wo nicht 32bit auf dem Sticker steht), denn nur darauf läuft Pegasus und die Netcom App funktioniert
+Power Eingang PC weg vom Patienten
+Datenkabel überprüfen (ähnlich Netzwerkkabel)
+Power Kabel einstecken, kabel zusammenbinden sodass die über dem boden hängen
+Maus-Tastatur
+Kabel einstecken: Adapter für Brause1, Brause2, dann 3xunsere für Chet Adapter, 3 Stück für 9-12 Kanäle
+Kabel beschriften
+Chet-Adapter beschriften
+2 Netzwerkkabel mitnehmen und prüfen, dass alle 4 Enden einrasten
+DAQ mitnehmen
+Patientenzimmer
+
+Netzwerkkabel einstecken
+Pc starten, ORANGENE STECKDOSE
+turn on amp and check if all 6 LEDs are on (solid light, not blinking)
+Netzwerke einrichten
+Unser PC hat 3 Netzwerkkarten (und somit 3 IPs), die am Ende folgendermaßen verbunden sein sollten:
+	192.168.3.100		(IP für amplifier)
+ 	192.168.1.3			(IP für lokales Netzwerk, also Datenübertragung zum Monitoring)
+	192.168.0.101-103	(IP für current_patient auf diskstation_4)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Experimentell, Option 1, einfacher
+
+Erstes Netzwerkkabel anschließen, und zwar am PC und in der Wand in NLX Net. Das ist die Verbindung zu Micromed/SDA.
+Unten rechts auf Desktop das Internet/Netzwerk Icon klicken, dann im Netzwerke Menü auf Adapter Settings und dort sollten 2 Netzwerke aktiv sein, d.h. 2 der 3 Netzwerkkarten sind an ein Netzwerk angeschlossen.
+Prüfen, bei welchem Netzwerk die IP 192.168.3.100 eingestellt ist: Rechtsklick auf Netzwerk, IPv4, Properties. Das Netzwerk mit IP 192.168.3.100 ist also die Verbindung zum Amplifier.
+Bei dem andern aktiven Netzwerk muss die IP 192.168.1.3 eingegeben werden. Anschließend prüfen, ob man tatsächlich auf den PC im Monitoring zugreifen kann. Dazu Dateibrowser öffnen und schauen, ob man auf \\192.168.1.2\System98 kommt.
+Nun das 2. Netzwerkkabel in den PC und die Wand einstecken und versuchen, auf current_patient zuzugreifen. Das klappt evtl automatisch, ansonsten müsste man nochmal in den IP Dialog öffnen und automatisch eine IP zuweisen, dann sollte es klappen. Ansonsten als letzte Option manuell eine der IPs 192.168.0.101-103 zuweisen.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+THE OLD WAY, Option 2. Skip if Option 1 was successful
+
+    prüfen, ob 3 Netzwerke sichtbar sind im ControlPanel unter Netzwerke, Adapter options (oder so)
+    prüfen, welches der Netzwerke zum Amplifier gehört
+    check if able to connect to 192.168.1.2 in file explorer
+    Wenn nicht, kann man entweder die Kabel in der Wand tauschen (=langsamere Variante), oder man muss die IPs tauschen von den beiden Netzwerken, die nicht mit dem Amp verbinden. Von diesen beiden Netzwerkverbindungen hat eine die zugewiesene IP 192.168.1.3, und eine ist auf 'automatisch zuweisen'. Man muss zunächst also die erstere auch auf automatisch umstellen, um die Adresse "...1.3" wieder freizumachen, dann die andere auf 192.168.1.3 setzen, dann abwarten, und dann sollte es gehen.
+Um current_patient auf Windows zu mounten: im File Browser Rechtsklick auf Network, dann 'map network drive', dann beliebigen noch freien Buchstaben auswählen und \\DISKSTATION_4\nlx_nas_04\current_patient, und Häkchen bei Reconnect at Logon.
+Der PC hat insgesamt 3 Netzwerkkarten. Eine davon ist mit dem Datenkabel bzw Glasfaserkabel verbunden, und diese hat IMMER die IP 192.168.3.100 und ist für die Verbindung zum Verstärker.
+als erstes amplifier identifizieren. Dazu ganz unten rechts auf das Internet Icon klicken, dann Adapter Eigenschaften, Rechtsklick auf das jeweilige Netzwerk und dann IPv4, Properties. 
+
+Die IP des Micromed PC ist 192.168.1.2 (SDA)
+
+wann immer eine IP adresse geändert wird, mindestens 10s warten, und immer nur einmal klicken weil der PC sich sonst evtl aufhängt.
+    ControlPanel > Network&Internet > Network Connections
+    Rechtsklick, Internet Protocol Version 4 (TCP/IPv4)
+    IP adresse einsehen und ggf ändern
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+copy micromed.cfg file from \\192.168.1.2\System98\Settings to desktop and rename it patientID_Micromed.cfg
+evtl einloggen mit EPI2/Aufnahme oder EPI2\Aufnahme, pw eeg
+start config converter. toolbar, blue/grey rectangular icon.
+Select file just copied to desktop
+Convert to e.g. 071_Pegasus_allDC.cfg, select Path to save on Desktop aswell.
+Name Harddrive: Wherever data should go, e.g. F:
+parobably tick: 
+    Pegasus
+    DC-Recording
+        Macro-electrodes
+        Micro-electrodes
+click "convert" and enter new Channel names, e.g. RA, RAH etc
+(optional: Click open file if you want to double check that everything looks ok, otherwise just close)
+
+start Pegasus, selecting the new config file (not last configuration)
+close & ignore window "Subject Info"
+
+View > Acquisition Entities... > 
+    Enable input inverted of macro channels except EKG (Input Inverted).(Macros are the ones with L and R at the end of the channel name)
+
+Create Time Windows: Add Window -> Time Window -> Add plots  (5 Stück: spiegelverkehrt: macros l&r, micros l&r, Oberflächen. Events bei Micros hinzufügen)
+right-click into each window and set zoom factor to 8x
+
+View > hardware properties: Set Active-Ground (e.g. if RA, select SRC05PG, because RA is on board 5)
+Check that Active Ground is plugged in properly (grey plastic box in far left middle/low part of amplifier)
+
+View  > Acquisition Status > Start Acquisition. Außerdem Clear klicken und Logged-Reset (=alte errors ausblenden)
+Check that there is enough disk space available
+
+SWITCH TO NETCOM REMOTE
+hit Connect
+set global data directory (Menu: "Path __________ […]", hit the "…" button and select E or F)
+Micros umreferenzieren z.B. auf RA Ref
+
+If using comboboards: set ref in netcom for MACROS to Subj Gnd 1 and for EKG, EMG to Ref 1.2 and 1.3, respectively
+
+Connect microwires to headstages
+active ground going into RA1 (add adapter where needed):
+                                    _____blackEnd 	- connect red/greyCable, Schlüsselbein kleben
+black cable into chet adapter______/
+                                   \_____redEnd 	- plugs into Fz
+
+Screenshots von Daten auf current_patient speichern mti dem Namen Nach_Anschließen
+SDA fragen ob Datenquali ok ist
+
+Für Comboboards: Ref in Netcom auf SubjGnd1 MACROS 
+für EKG, EMG: Ref 1.2 und 1.3
+    

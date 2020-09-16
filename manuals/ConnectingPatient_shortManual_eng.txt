@@ -1,0 +1,108 @@
+>>>>>>>   C o n n e c t i n g    P a t i e n t    <<<<<<<<<<<<<
+
+Day before: prep the tower in the office!
+use a 64bit PC (one that doesnt have a '32bit sticker), because Pegasus and the Netcom App won't run on the 32bit one.
+Go and ask in SDA which patient room the patient is going to be in. if it's an even number, the tower will be to the right of the patient (from our point of view).
+Make sure the Power supply is on the far side from the patient and cables. 
+Check data cable between PC and amplifier
+plug cables into amplifier in every second slot (first slot remains empty). make sure they're all the way in! Should hear a click sound.
+Make sure everything is labeled correctly, incl. HDMI cables, chet-adapter, and print the implantation scheme / order of HDMI channels
+find 2 network cables, mouse, keyboard
+make sure there is a DAQ
+
+Patient room:
+Connect the power supply, use ORANGE outlet.
+turn on amp and check if all 6 LEDs are on (solid light, not blinking)
+set up network connections:
+detailed steps below, but some info upfront: the PC has 3 network cards, and therefore 3 IPs, that should be configured as follows:
+	192.168.3.100		(IP for amplifier)
+ 	192.168.1.3			(IP for local network - data transmission to monitoring=SDA)
+	192.168.0.101-103	(IP für current_patient auf diskstation_4)
+steps:
+- connect one network cable to the pc and and to the socket in the wall that says NLX Net. This is the connection to Micromed/Monitoring. Click on the networking icon in the bottom right corner, then 'adapter settings' and you should have 2 active networks (or, if you're using the new NAS from Jul 2020, 3 active networks). One is the amp, one is the cable you just plugged in, and you might have the NAS connected.
+- open file explorer, check if you can access \\192.168.1.2\System98\Settings. 
+    If so
+        great! Copy micromed.cfg from that location to your desktop. 
+        Rename it patientID_Micromed.cfg, e.g. 084_Micromed.cfg
+    else
+        double check the IP addresses of the available network connections 
+        (right click on network, IPv4, properties). Be patient after making any changes. 
+        If the PC freezes, don't click on a bunch of stuff in desperation.
+    end
+- connect the second network cable to PC & the other socket in the wall. This is your connection to current_patient. Find your file explorer and pray that you can access current_patient. If you can't get this connection at all it's not the end of the world because we can grab some data with hard drives and frequently switch out the towers, but try to make it happen.
+open patientID_Micromed.cfg
+    -check that all bundles are represented, especially Amygdala on both sides. 
+    -If a bundle is missing, call DJ Gregor Gast.
+    -Delete all u* channels. 
+should a login be required, it's EPI2/Aufnahme or EPI2\Aufnahme, pw eeg
+start config converter. toolbar, blue/grey rectangular icon.
+Select file just copied to desktop
+By clicking on 'save as ...' Convert to e.g. 071_Pegasus_allDC.cfg, select Path to save on Desktop aswell.
+Name Harddrive: Wherever data should go, e.g. F
+
+IF USING NEW NAS (JUL 2020): it doesnt really matter which drive you indicate here, but it should exist on the pc. E.g. D. But you will have to indicate the full file path later in the netcom app!
+parobably tick: 
+    Pegasus
+    DC-Recording
+        Macro-electrodes
+        Micro-electrodes
+click "convert" and enter new Channel names, e.g. RA, RAH etc
+(optional: Click open file if you want to double check that everything looks ok, otherwise just close)
+
+start Pegasus, selecting the new config file (not last configuration)
+close & ignore window "Subject Info"
+
+View > Acquisition Entities... > 
+    Enable input inverted of macro channels except EKG (Input Inverted).(Macros are the ones with L and R at the end of the channel name)
+
+Create Time Windows: Add Window -> Time Window -> Add plots  (5 Stück: spiegelverkehrt: macros l&r, micros l&r, Oberflächen. Events bei Micros hinzufügen)
+right-click into each window and set zoom factor to 8x
+
+View > hardware properties: Set Active-Ground (e.g. SCR05R1, which is our first board (05, most of the times amygdala))
+Check that Active Ground is plugged in properly (grey plastic box in far left middle/low part of amplifier)
+
+IF USING NEW PC (from Jul 2020): you need to set the correct SubSamplingInterleave in Pegasus because the current version of the netcom app gui can't handle this many channels. To do this, go to View-> Acquisition Entities -> Acquisition ENtities Tab -> select all dc channels and set SubSamplingInterleave to 16 (resulting in a 2000Hz sampling frequency).
+
+View  > Acquisition Status > START ACQUISITION. Click Clear and Logged-Reset (=hide old errors)
+Check that there is enough disk space available!
+
+OPEN NETCOM REMOTE
+acquisition should be on at this point, you should see data streams.
+hit Connect
+set global data directory (Menu: "Path __________ […]")
+
+IF USING NEW NAS
+    enter: \\10.1.8.3\Neuralynx_Data\
+    (can double check this in file explorer)
+else
+    hit the "…" button and select E or F)
+end
+
+IF USING AN OLD PC (from pre Jul 2020)
+    Switch to CSC-view, set SubSamplingInterleave to 16 to all micro-dc-channels and hit enter. 
+else
+    you have hopefully done this in Pegasus.
+end
+
+If you're using comboboards (the amplifier with half the slots. if you're not sure, you're probably not using comboboards): set ref in netcom for MACROS to SubjGnd1 and for EKG, EMG to Ref 1.2 and 1.3, respectively
+
+Connect microwires to headstages
+
+active ground going into RA1, use outer socket (add adapter where needed):
+                                    _____blackEnd - electrode left clavicle (Schlüsselbein)
+black cable into chet adapter______/
+                                   \_____redEnd   - plugs into Fz
+
+If the data looks super noisy, look for things that might be affecting the signal quality:
+- check for any electrical devices around the patient
+- the blood pressure monitor should only be connected for 24h after surgery. Afterwards, ask the nurses to disconnect and remove it.
+- try switching the lights off
+- make sure the data cables are NOT TOUCHING THE GROUND or the power cable, and that they're not too tangled up in general
+
+Save screenshot of the data on current_atient, name it something like 083_after_connecting
+ask in SDA if data quality is ok
+
+do a 10min reference recording (make sure patient is comfortable so they don't move too much), and save a screenshot along with the data. 
+
+----
+don't forget to disinfect the tower incl cables after patient is done.
