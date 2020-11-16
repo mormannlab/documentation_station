@@ -5,8 +5,9 @@ use a 64bit PC (one that doesnt have a '32bit sticker), because Pegasus and the 
 Go and ask in SDA which patient room the patient is going to be in. if it's an even number, the tower will be to the right of the patient (from our point of view).
 Make sure the Power supply is on the far side from the patient and cables. 
 Check data cable between PC and amplifier
-leave one door of the amplifier box open prevent overheating
+leave one door of the amplifier box open to prevent overheating
 plug cables into amplifier in every second slot (first slot remains empty). make sure they're all the way in! Should hear a click sound.
+("Brause1", "Brause2, 3x our Chet Adapter, 3 for channels 9-12)
 Make sure everything is labeled correctly, incl. HDMI cables, chet-adapter, and print the implantation scheme / order of HDMI channels
 find 2 network cables, mouse, keyboard
 make sure there is a DAQ
@@ -21,7 +22,8 @@ detailed steps below, but some info upfront: the PC has 3 network cards, and the
  	192.168.1.3			(IP for local network - data transmission to monitoring=SDA)
 	192.168.0.101-103	(IP für current_patient auf diskstation_4)
 steps:
-- connect one network cable to the pc and and to the socket in the wall that says NLX Net. This is the connection to Micromed/Monitoring. Click on the networking icon in the bottom right corner, then 'adapter settings' and you should have 2 active networks (or, if you're using the new NAS from Jul 2020, 3 active networks). One is the amp, one is the cable you just plugged in, and you might have the NAS connected.
+- connect one network cable to the pc and to the socket in the wall that says NLX Net. This is the connection to Micromed/Monitoring. 
+- Click on the networking icon in the bottom right corner, then 'adapter settings' and you should have 2 active networks (or, if you're using the new NAS from Jul 2020, 3 active networks). One is the amp, one is the cable you just plugged in, and you might have the NAS connected.
 - open file explorer, check if you can access \\192.168.1.2\System98\Settings. 
     If so
         great! Copy micromed.cfg from that location to your desktop. 
@@ -34,20 +36,23 @@ steps:
 - connect the second network cable to PC & the other socket in the wall. This is your connection to current_patient. Find your file explorer and pray that you can access current_patient. If you can't get this connection at all it's not the end of the world because we can grab some data with hard drives and frequently switch out the towers, but try to make it happen.
 open patientID_Micromed.cfg
     -check that all bundles are represented, especially Amygdala on both sides. 
-    -If a bundle is missing, call DJ Gregor Gast.
+	The last couple of times there was always one bundle missing (mostly Amygdala on one side). Don't bother calling Gregor Gast as it seems to be a Micromed bug and he can't do anything about it. 
+	Instead, add the bundles manually.
     -Delete all u* channels. 
 should a login be required, it's EPI2/Aufnahme or EPI2\Aufnahme, pw eeg
 start config converter. toolbar, blue/grey rectangular icon.
 Select file just copied to desktop
-By clicking on 'save as ...' Convert to e.g. 071_Pegasus_allDC.cfg, select Path to save on Desktop aswell.
+By clicking on 'save as ...' Convert to e.g. 071_Pegasus.cfg, select Path to save on Desktop aswell.
 Name Harddrive: Wherever data should go, e.g. F
 
 IF USING NEW NAS (JUL 2020): it doesnt really matter which drive you indicate here, but it should exist on the pc. E.g. D. But you will have to indicate the full file path later in the netcom app!
-parobably tick: 
+on all systems you have to tick: 
     Pegasus
+IF USING NEW NAS 
     DC-Recording
-        Macro-electrodes
         Micro-electrodes
+an all systems: don't tick (or un-tick) DC-Recording -> Macro-electrodes		
+		
 click "convert" and enter new Channel names, e.g. RA, RAH etc
 (optional: Click open file if you want to double check that everything looks ok, otherwise just close)
 
@@ -56,11 +61,15 @@ close & ignore window "Subject Info"
 
 View > Acquisition Entities... > 
     Enable input inverted of macro channels except EKG (Input Inverted).(Macros are the ones with L and R at the end of the channel name)
+	Ignore the input inverted option for the other channels.
 
-Create Time Windows: Add Window -> Time Window -> Add plots  (5 Stück: spiegelverkehrt: macros l&r, micros l&r, Oberflächen. Events bei Micros hinzufügen)
+Create Time Windows: Add Window -> Time Window -> Add plots  (5 Stück: spiegelverkehrt: macros l&r, micros l&r, Oberflächen. Also add Events for the micros)
 right-click into each window and set zoom factor to 8x
+Check if EKG looks correct. If it looks the wrong way round: change the input inverted option
+If SDA complains that signals look the wrong way round you can also change this option for the respective channels. 
+Don't worry: it only effects the display, not how the data is saved.
 
-View > hardware properties: Set Active-Ground (e.g. SCR05R1, which is our first board (05, most of the times amygdala))
+View > hardware properties: Set Active-Ground (e.g. SRC05R1, which is our first board (05, most of the times amygdala))
 Check that Active Ground is plugged in properly (grey plastic box in far left middle/low part of amplifier)
 
 IF USING NEW PC (from Jul 2020): you need to set the correct SubSamplingInterleave in Pegasus because the current version of the netcom app gui can't handle this many channels. To do this, go to View-> Acquisition Entities -> Acquisition ENtities Tab -> select all dc channels and set SubSamplingInterleave to 16 (resulting in a 2000Hz sampling frequency).
@@ -88,7 +97,7 @@ end
 
 If you're using comboboards (the amplifier with half the slots. if you're not sure, you're probably not using comboboards): set ref in netcom for MACROS to SubjGnd1 and for EKG, EMG to Ref 1.2 and 1.3, respectively
 
-ask the patient to use the FFP2 or FFP3 mask during connectting the micros
+ask the patient to use the FFP2 or FFP3 mask during connecting the micros
 Connect microwires to headstages
 
 active ground going into RA1, use outer socket (add adapter where needed):
@@ -102,7 +111,7 @@ If the data looks super noisy, look for things that might be affecting the signa
 - try switching the lights off
 - make sure the data cables are NOT TOUCHING THE GROUND or the power cable, and that they're not too tangled up in general
 
-Save screenshot of the data on current_atient, name it something like 083_after_connecting
+Save screenshot of the data on current_patient, name it something like 083_after_connecting
 ask in SDA if data quality is ok
 
 do a 10min reference recording (make sure patient is comfortable so they don't move too much), and save a screenshot along with the data. 
