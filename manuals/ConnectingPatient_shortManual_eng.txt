@@ -9,7 +9,7 @@ leave one door of the amplifier box open to prevent overheating
 plug cables into amplifier in every second slot (first slot remains empty). make sure they're all the way in! Should hear a click sound.
 ("Brause1", "Brause2, 3x our Chet Adapter, 3 for channels 9-12)
 Make sure everything is labeled correctly, incl. HDMI cables, chet-adapter, and print the implantation scheme / order of HDMI channels
-find 2 network cables, mouse, keyboard
+find 3 network cables, mouse, keyboard, box with switch (attached to the table)
 make sure there is a DAQ
 make sure you have a FFP2 or 3 mask for the patient
 
@@ -33,11 +33,13 @@ steps:
         (right click on network, IPv4, properties). Be patient after making any changes. 
         If the PC freezes, don't click on a bunch of stuff in desperation.
     end
-- connect the second network cable to PC & the other socket in the wall. This is your connection to current_patient. Find your file explorer and pray that you can access current_patient. If you can't get this connection at all it's not the end of the world because we can grab some data with hard drives and frequently switch out the towers, but try to make it happen.
+- connect the second network cable to PC --> switch; the third one switch --> the other socket in the wall. This is your connection to current_patient. Connect the power supply for the switch and make sure the switch is turned on; there is a toggle button on the power cable. 
+	If the power supply works and everything is connected correctly, a green light at the plugged in power cables appears at the switch.
+	Find your file explorer and pray that you can access current_patient. If you can't get this connection at all it's not the end of the world because we can grab some data with hard drives and frequently switch out the towers, but try to make it happen.
 open patientID_Micromed.cfg
     -check that all bundles are represented, especially Amygdala on both sides. 
-	The last couple of times there was always one bundle missing (mostly Amygdala on one side). Don't bother calling Gregor Gast as it seems to be a Micromed bug and he can't do anything about it. 
-	Instead, add the bundles manually.
+	The last couple of times there was always one bundle missing (mostly Amygdala on one side). 
+	Ask Gregor Gast to add them. He will probably refuse to do it because it is a micromed bug. In this case, you have to add them manually
     -Delete all u* channels. 
 should a login be required, it's EPI2/Aufnahme or EPI2\Aufnahme, pw eeg
 start config converter. toolbar, blue/grey rectangular icon.
@@ -51,10 +53,18 @@ on all systems you have to tick:
 IF USING NEW NAS 
     DC-Recording
         Micro-electrodes
+Otherwise: untick DC-Recording (also Micro-electrodes and Macro-electrodes)
 an all systems: don't tick (or un-tick) DC-Recording -> Macro-electrodes		
 		
 click "convert" and enter new Channel names, e.g. RA, RAH etc
+If config converter does not ask for new channel names, micros are missing --> ask Gregor Gast
 (optional: Click open file if you want to double check that everything looks ok, otherwise just close)
+
+FOR CHANGING PC: 
+Do not export Config file (to import it on the new PC)
+Instead: use Config file that was used to open Pegasus before on the other PC 
+OR: even create the config file completely new (including config converter)
+--> Yes, you have to apply all the settings again (input inverted, dc-channels, etc..) 
 
 start Pegasus, selecting the new config file (not last configuration)
 close & ignore window "Subject Info"
@@ -62,6 +72,7 @@ close & ignore window "Subject Info"
 View > Acquisition Entities... > 
     Enable input inverted of macro channels except EKG (Input Inverted).(Macros are the ones with L and R at the end of the channel name)
 	Ignore the input inverted option for the other channels.
+	Untick the low-frequency (high-pass)filter option (filter out eveything <0.1Hz) for all macro channels.
 
 Create Time Windows: Add Window -> Time Window -> Add plots  (5 Stück: spiegelverkehrt: macros l&r, micros l&r, Oberflächen. Also add Events for the micros)
 right-click into each window and set zoom factor to 8x
@@ -110,6 +121,7 @@ If the data looks super noisy, look for things that might be affecting the signa
 - the blood pressure monitor should only be connected for 24h after surgery. Afterwards, ask the nurses to disconnect and remove it.
 - try switching the lights off
 - make sure the data cables are NOT TOUCHING THE GROUND or the power cable, and that they're not too tangled up in general
+- if noise is still there, try removing the switch (connect one lan cable from the computer directly to current_patient on the wall)
 
 Save screenshot of the data on current_patient, name it something like 083_after_connecting
 ask in SDA if data quality is ok
