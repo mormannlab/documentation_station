@@ -40,7 +40,7 @@ open patientID_Micromed.cfg
     -check that all bundles are represented, especially Amygdala on both sides. 
 	The last couple of times there was always one bundle missing (mostly Amygdala on one side). 
 	Ask Gregor Gast to add them. He will probably refuse to do it because it is a micromed bug. In this case, you have to add them manually
-    -Delete all u* channels. 
+    -Delete all u* channels (not the Micro_u*)
 should a login be required, it's EPI2/Aufnahme or EPI2\Aufnahme, pw eeg
 start config converter. toolbar, blue/grey rectangular icon.
 Select file just copied to desktop
