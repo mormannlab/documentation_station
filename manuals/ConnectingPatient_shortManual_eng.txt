@@ -24,7 +24,8 @@ detailed steps below, but some info upfront: the PC has 3 network cards, and the
 steps:
 - connect one network cable to the pc and to the socket in the wall that says NLX Net. This is the connection to Micromed/Monitoring. 
 - Click on the networking icon in the bottom right corner, then 'adapter settings' and you should have 2 active networks (or, if you're using the new NAS from Jul 2020, 3 active networks). One is the amp, one is the cable you just plugged in, and you might have the NAS connected.
-- open file explorer, check if you can access \\192.168.1.2 (Username: AG_Mormann, type in known psw)
+- open file explorer, check if you can access \\192.168.1.2 (Username: AG_Mormann, type in known psw; for Windows7: Username:ukbmmaa0#\AG_Mormann 
+  with # beeing the room number, eg.4)
 - click on UKBMMA0# folder (# is the room number, eg.4)
 - click on Settings folder
     If successful
