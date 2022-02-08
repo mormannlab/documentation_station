@@ -3,7 +3,7 @@
 Day before: prep the tower in the office!
 use a 64bit PC (one that doesnt have a '32bit sticker), because Pegasus and the Netcom App won't run on the 32bit one.
 Go and ask in SDA which patient room the patient is going to be in. if it's an even number, the tower will be to the right of the patient (from our point of view).
-Make sure the Power supply is on the far side from the patient and cables. 
+Make sure the Power supply is on the far side from the patient and cables. Get a power cable for the tower that is long enough to reach the orange socket.
 Check data cable between PC and amplifier
 leave one door of the amplifier box open to prevent overheating
 plug cables into amplifier in every second slot (first slot remains empty). make sure they're all the way in! Should hear a click sound.
@@ -24,7 +24,7 @@ detailed steps below, but some info upfront: the PC has 3 network cards, and the
 steps:
 - connect one network cable to the pc and to the socket in the wall that says NLX Net. This is the connection to Micromed/Monitoring. 
 - Click on the networking icon in the bottom right corner, then 'adapter settings' and you should have 2 active networks (or, if you're using the new NAS from Jul 2020, 3 active networks). One is the amp, one is the cable you just plugged in, and you might have the NAS connected.
-- For Windows 10: open file explorer, check if you can access \\192.168.1.2 (Username: AG_Mormann, type in known psw)
+- For Windows 10: open file explorer, check if you can access \\192.168.1.2 (Username: AG_Mormann, type in known psw, the psw has a number in it)
 - click on UKBMMAA0# folder (# is the room number, eg.4)
 
 - For Windows 7: Start --> type 'cmd' (command-line) --> type 'net use * /delete' --> confirm with Y
@@ -78,7 +78,7 @@ close & ignore window "Subject Info"
 View > Acquisition Entities... > 
     Enable input inverted of macro channels except EKG (Input Inverted).(Macros are the ones with L and R at the end of the channel name)
 	Ignore the input inverted option for the other channels.
-	Untick the low-frequency (high-pass)filter option (filter out eveything <0.1Hz) for all macro channels.
+	Untick the 'low cut' (high-pass) filter option (<0.1Hz) for all macro channels.
 
 Create Time Windows: Add Window -> Time Window -> Add plots  (5 Stück: spiegelverkehrt: macros l&r, micros l&r, Oberflächen. Also add Events for the micros)
 right-click into each window and set zoom factor to 8x
@@ -90,6 +90,7 @@ View > hardware properties: Set Active-Ground (e.g. SRC05R1, which is our first 
 Check that Active Ground is plugged in properly (grey plastic box in far left middle/low part of amplifier)
 
 IF USING NEW PC (from Jul 2020): you need to set the correct SubSamplingInterleave in Pegasus because the current version of the netcom app gui can't handle this many channels. To do this, go to View-> Acquisition Entities -> Acquisition ENtities Tab -> select all dc channels and set SubSamplingInterleave to 16 (resulting in a 2000Hz sampling frequency).
+Leave the SubSamplingInterleave for micros at 1 and for normal (no dc) macros and for surface electrodes at 2 (This is how it should already be set in the config file).
 
 View  > Acquisition Status > START ACQUISITION. Click Clear and Logged-Reset (=hide old errors)
 Check that there is enough disk space available!
@@ -111,8 +112,6 @@ IF USING AN OLD PC (from pre Jul 2020)
 else
     you have hopefully done this in Pegasus.
 end
-
-Check that SubSamplingInterleave of Macros is 16, of Micros (not dc) 1; if not: adjust it!
 
 If you're using comboboards (the amplifier with half the slots. if you're not sure, you're probably not using comboboards): set ref in netcom for MACROS to SubjGnd1 and for EKG, EMG to Ref 1.2 and 1.3, respectively
 
