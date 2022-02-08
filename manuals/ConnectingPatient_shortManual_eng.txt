@@ -100,6 +100,8 @@ acquisition should be on at this point, you should see data streams.
 hit Connect
 set global data directory (Menu: "Path __________ […]")
 
+Check the input range in Netcom Remote and adjust the values if necessary (stop recording, new folder, type in value, press enter). Micros are supposed to have the input range 3200 microvolts, macros and surface electrodes are supposed to be set to 1600 microvolts.
+
 IF USING NEW NAS
     enter: \\10.1.8.3\Neuralynx_Data\
     (can double check this in file explorer)
