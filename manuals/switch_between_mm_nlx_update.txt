@@ -1,0 +1,56 @@
+first step: while SDA is still here, ask which folder in the Impl --> current year (2022) --> current patient's name to use (usually it's the folder with the most excluded channels plus without micros)
+
+the important point is keeping the current system running before the other one is completely ready to record
+
+if going from mm to neuralynx
+	-prepare pegasus for recording 
+	-switch the Brausen
+	-after that you can go on with the micromed side 
+end
+
+If micromed is open
+	turn off recording (press 1. red 2. blue), close the program	
+end
+
+- click Montage (buttom right corner of the desktop)
+- "Ordner Öffnen" --> Impl --> current year (2022) --> current patient's name
+if switching to micromed
+	-go to micromed (the one SDA mentioned or the one as decribed above with "micromed" in the name)
+elseif switching to Neuralynx 
+	-go to neuralynx (the one SDA mentioned or the one as decribed above with "neuralynx" in the name)
+end
+	
+- copy the three files in the folder	
+- paste in C:/System98/Setting
+
+- start micromed program from desktop
+- on top left: extra --> Systemeinstellung --> EEG (pw:micromed)
+- Verstärker Einsetllungen
+
+if going from NLX to mm
+	-first in the buttom dropdown menu choose
+		BQPCI Express
+	-then in the upper dromdown menu choose 
+		SD LTM128 Express
+elseif going from mm to NLX
+	-first in the buttom dropdown menu choose
+		network
+	-then in the upper dromdown menu choose 
+		Digitalynx 256
+		192.168.1.3
+end
+
+- beenden
+- click on EEG button (middle top button in micromed gui)
+- first the videocamera
+
+if switching to micromed
+	switch Brausen
+end
+
+- then the play button (blue triangle)
+	if "ERSTE MENU" error: reset Brause 
+- then the video doppelbild (the one with patient image, the left one)
+- then recording (red button)
+		
+		
