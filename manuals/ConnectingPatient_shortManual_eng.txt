@@ -90,8 +90,7 @@ Don't worry: it only effects the display, not how the data is saved.
 View > hardware properties: Set Active-Ground (e.g. SRC05R1, which is our first board (05, most of the times amygdala))
 Check that Active Ground is plugged in properly (grey plastic box in far left middle/low part of amplifier)
 
-IF USING NEW PC (from Jul 2020): you need to set the correct SubSamplingInterleave in Pegasus because the current version of the netcom app gui can't handle this many channels. To do this, go to View-> Acquisition Entities -> Acquisition ENtities Tab -> select all dc channels and set SubSamplingInterleave to 16 (resulting in a 2000Hz sampling frequency).
-Leave the SubSamplingInterleave for micros at 1 and for normal (no dc) macros and for surface electrodes at 2 (This is how it should already be set in the config file).
+Make sure that the SubSamplingInterleave for micros is 1 and for macros and for surface electrodes at 16 (This is how it should already be set in the config file).
 
 View  > Acquisition Status > START ACQUISITION. Click Clear and Logged-Reset (=hide old errors)
 Check that there is enough disk space available!
